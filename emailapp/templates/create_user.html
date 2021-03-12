@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Create User{% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+<div class="important">
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="row" id="main" >
+                <div class="col-sm-12 col-md-12 well" id="content">
+                    <div class="col-md-12" style="margin-top: 40px;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="panel-body">
+                                    <form method="POST" role="form">
+                                        <div class="form-group">
+                                            <h2 class="text-center">ADD EMAIL USER</h2>
+                                            <p class="fourth-text text-center" style="color:red;">{{ msg }}</p>
+                						</div><hr>
+                						<div class="form-group">
+					                		<label class="control-label" >Name</label>
+							                <input type="text" maxlength="50" name="name" class="form-control" required="required" placeholder="First name" >
+						                </div>
+
+                						<div class="form-group">
+				                			<label class="control-label" >Email</label>
+                							<input type="email" maxlength="50" name="email" placeholder="Email" required="required" class="form-control">
+				                		</div>
+
+                                        <div class="form-group">
+                                            <button id="signupSubmit" type="submit" class="btn btn-info btn-block">Create User</button>
+						                </div><hr>
+                                    </form>
+                                </div>
+                			</div>
+                	    </div>
+                    	<div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+import os
+
+# MySQL Credential (local)
+MYSQL_USER = os.getenv("MYSQL_USER")
+MYSQL_PASS = os.getenv("MYSQL_PASS")
+MYSQL_HOST = os.getenv("MYSQL_HOST")
+MYSQL_PORT = os.getenv("MYSQL_PORT")
+DBNAME = os.getenv("DBNAME")
+
+CONNECT_TIMEOUT = os.getenv("CONNECT_TIMEOUT")
+
+
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+APP_STATIC = os.path.join(APP_ROOT, 'static')
+
+BASE_URL = os.getenv("BASE_URL")
+
+EMAIL_OPEN_URL = os.getenv("EMAIL_OPEN_URL")
+EMAIL_CLICK_URL = os.getenv("EMAIL_CLICK_URL")
+EMAIL_UNSUBSCRIBE = os.getenv("EMAIL_UNSUBSCRIBE") 
+PYTRACKING_SECRET_KEY = os.getenv("PYTRACKING_SECRET_KEY")
+
+
+
+
+AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
+
+AWS_REGION = os.getenv("AWS_REGION")
+AWS_FROM_ADDRESS = os.getenv("AWS_FROM_ADDRESS")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
+AWS_EMAIL_SENDING_RATE_LIMIT = os.getenv("AWS_EMAIL_SENDING_RATE_LIMIT")
+AWS_EMAIL_SENDING_RATE_TIME = os.getenv("AWS_EMAIL_SENDING_RATE_TIME")
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+USE_AWS_EMAIL_SERVER = os.getenv("USE_AWS_EMAIL_SERVER")
+
+APP_HOST = os.getenv("APP_HOST")
+
+APP_PORT = int(os.getenv("APP_PORT"))
+APP_DEBUG = os.getenv("APP_DEBUG")
+
+# Gmail Credential
+LOGIN_EMAIL = os.getenv("LOGIN_EMAIL")
+LOGIN_PASSWORD = os.getenv("LOGIN_PASSWORD")
+EMAIL_LIMIT = os.getenv("EMAIL_LIMIT")
+EMAIL_TIME_LIMIT_IN_MINUTES = os.getenv("EMAIL_TIME_LIMIT_IN_MINUTES")
+
+LIMIT = os.getenv("LIMIT")

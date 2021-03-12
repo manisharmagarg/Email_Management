@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Inspiration{% endblock %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-toggle.min.css') }}">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+        <heading>Edit {{ campaign_name }}</heading>
+
+        <div class="progress-bar progress-bar-info upper_btn" role="progressbar" style="background-color: #FFB220; width:120px;">
+            <h5 style="font-size:14px;">Draft</h5>
+        </div>
+    <div class="col-sm-12 col-md-12 well" id="content" style="margin:18px auto 35px auto; height: 100vh;">
+        <form method="POST" role="form">
+            <div class="col-md-12 paddless" style="padding-left: 0px; margin-top:-7px; padding-right: 30px;">
+                <div class="form-group">
+                    <label class="control-label font-label" >Campaign name</label>
+                    <input type="text" name="campaign_name"  value="{{ campaign_name }}" class="form-control" required="required"
+                    placeholder="Weekly Inspiration">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label font-label" >Campaign type</label>
+                    <input type="text" name="campaign_type" value="{{ campaign_type }}" class="form-control" required="required"
+                    placeholder="one-time campaign" readonly="readonly">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label font-label" >Segment</label>
+                    <select name="list_id"  class="form-control" required="required">
+                        <option value="{{list_id}}" style="background:#e4e4e4;" hidden>{{list_name}} ({{count}})</option>
+                        {% for item in list_data %}
+                        <option value="{{ item.id }}">
+                        {{ item.name|title }} ({{ item.count }})
+                        </option>
+                        {%endfor%}
+                    </select>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label font-label">A/B Testing</label><br>
+
+                    {% if campaign_type == "One-time"%}
+                    <span class="tool-tip" data-toggle="tooltip" data-placement="top">
+                        <input type="hidden" value="" >
+                        <label class="switch">
+                            <input type="checkbox" disabled="disabled">
+                            <span class="slider round slider-background" style="left:6px !important;"></span>
+                        </label>
+                    </span>
+                    {% elif campaign_type == "AB_Test" %}
+                    <span class="tool-tip" data-toggle="tooltip" data-placement="top">
+                        <input type="hidden" value="" >
+                        <label class="switch">
+                            <input type="checkbox" checked disabled="disabled">
+                            <span class="slider round slideron" style="background-color:#1D8FFA !important;"></span>
+                        </label>
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="form-group" style="text-align: center;margin-top:145px;">
+                    <a href="/campaigns/" class="btn btn-back"><p style="margin-top:3px;">Cancel</p></a>
+                    <button type="submit" class="btn-save">Next</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

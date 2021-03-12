@@ -1,0 +1,372 @@
+{% extends "base.html" %}
+{% block title %}Campaigns {% endblock %}
+{% block head %}
+<meta http-equiv="default-style" content="the document's preferred stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/update_status.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
+<style>
+
+</style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <heading>Campaigns</heading>
+
+            <a  href="/campaigns/create/" class="btn create">Create campaign</a><br><br>
+
+        <div class="col-sm-12 col-md-12 well" id="content">
+            <form method="post">
+                <select name="campaign" id="select" class="form-control campaign" style="float:left;margin-left:10px;width: 220px;">
+                    <option value="" disabled selected hidden>Sort by campaign type</option>
+                    <option value="One-time">One-time</option>
+                    <option value="AB_Test">A/B Test</option>
+                    <option value="campaigns">All Campaigns</option>
+                </select>
+            </form><br>
+
+            <div class="campaigns">
+            {% if email_campaigns %}
+                <table class="table " id="paging">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in email_campaigns %}
+                    <tr>
+
+                        <td width="75%"  data-td="{{item.campaign_type}}">
+                            {% if item.campaign_type == "AB_Test" %}
+                            {{average}}<a href="/campaigns/dashboard/{{item.id}}/{{item.campaign_type}}/" class="campaign_title">{{item.name}}</a>
+                            <h5 class="sub">A/B Test</h5>
+                            {% elif item.campaign_type == "One-time" %}
+                            {{average}}<a href="/campaigns/dashboard/{{item.id}}/{{item.campaign_type}}/" class="campaign_title">{{item.name}}</a>
+                            <h5 class="sub">One-time</h5>
+                            {% endif %}
+                        </td>
+
+                        <td width="25%"  data-td="{{item.campaign_type}}" style=" padding-top: 0px; padding-bottom: 0px; ">
+
+                            {% if item.status == "ACTIVE" and item.campaign_state == "PUBLISHED"%}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info active" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Active</h5>
+                                    </div>
+                                </div>
+                                    <a href="/campaigns/{{ item.campaign_type }}/{{ item.id }}/edit/"  class="btn btn-default btn-circle btn-edit">Edit</a>
+
+                            {% elif item.status == "ACTIVE" and item.campaign_state == "DRAFT" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info draft" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Draft</h5>
+                                    </div>
+                                </div>
+                                    <a href="/campaigns/{{ item.campaign_type }}/{{ item.id }}/edit/"  class="btn btn-default btn-circle btn-edit">Edit</a>
+
+                            {% elif item.status == "PROCESSING" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info processing" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Processing</h5>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Pause</a>
+
+                            {% elif item.status == "QUEUED" %}
+                                <div class="progress Sending progress_bar">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{item.average}}%; background-color: #1D8FFA;">
+                                         <h3 style="margin-left:6px;font-size:12px">Sending...{{item.average}}%</h3>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Pause</a>
+                            {% elif item.status == "PAUSE" %}
+                                <div class="progress Sending progress_bar">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{item.average}}%; background-color: #1D8FFA;">
+                                         <h3 style="margin-left:6px;font-size:12px">Sending...{{item.average}}%</h3>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Resume</a>
+
+                            {% elif item.status == "PROCESSED" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar processed" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:100% "><h5>Completed</h5>
+                                    </div>
+                                </div>
+                                <!--<span class="tool-tip" data-toggle="tooltip" data-placement="right" title="Already completed !">-->
+                                <a href="javascript:void(0);" class="btn btn-default btn-circle btn-edit" disabled="disabled" >Edit</a>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                        {% endfor %}
+                {% else %}
+                    <br><hr>
+                    <td>No Email Campaign(s)</td>
+                {% endif %}
+                </tbody>
+            </table>
+                <script>
+                    $(document).ready( function () {
+                        $('#paging').DataTable({
+                            "ordering": false
+                        });
+                    } );
+                </script>
+            </div>
+
+            <div class="AB_test">
+            {% if AB_test %}
+                <table class="table " id="paging2">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in AB_test %}
+                    <tr>
+                        <td width="75%"  data-td="{{item.campaign_type}}">
+                            {% if item.campaign_type == "AB_Test" %}
+
+                            <a href="/campaigns/dashboard/{{item.id}}/{{item.campaign_type}}/" class="campaign_title">{{item.name}}</a>
+                            <h5 class="sub">A/B Test</h5>
+                            {% elif item.campaign_type == "One-time" %}
+                            <a href="/campaigns/dashboard/{{item.id}}/{{item.campaign_type}}/" class="campaign_title">{{item.name}}</a>
+                            <h5 class="sub">One-time</h5>
+                            {% endif %}
+                        </td>
+
+                        <td width="25%"  data-td="{{item.campaign_type}}" style=" padding-top: 0px; padding-bottom: 0px; ">
+
+                            {% if item.status == "ACTIVE" and item.campaign_state == "PUBLISHED"%}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info active" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Active</h5>
+                                    </div>
+                                </div>
+                                    <a href="/campaigns/{{ item.campaign_type }}/{{ item.id }}/edit/"  class="btn btn-default btn-circle btn-edit">Edit</a>
+
+                            {% elif item.status == "ACTIVE" and item.campaign_state == "DRAFT" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info draft" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Draft</h5>
+                                    </div>
+                                </div>
+                                    <a href="/campaigns/{{ item.campaign_type }}/{{ item.id }}/edit/"  class="btn btn-default btn-circle btn-edit">Edit</a>
+
+                            {% elif item.status == "PROCESSING" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info processing" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Processing</h5>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Pause</a>
+
+                            {% elif item.status == "QUEUED" %}
+                                <div class="progress Sending progress_bar">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{item.average}}%; background-color: #1D8FFA;">
+                                         <h3 style="margin-left:6px;font-size:12px">Sending...{{item.average}}%</h3>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Pause</a>
+                            {% elif item.status == "PAUSE" %}
+                                <div class="progress Sending progress_bar">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{item.average}}%; background-color: #1D8FFA;">
+                                         <h3 style="margin-left:6px;font-size:12px">Sending...{{item.average}}%</h3>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Resume</a>
+
+                            {% elif item.status == "PROCESSED" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar processed" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:100% "><h5>Completed</h5>
+                                    </div>
+                                </div>
+                                <!--<span class="tool-tip" data-toggle="tooltip" data-placement="right" title="Already completed !">-->
+                                <a href="javascript:void(0);" class="btn btn-default btn-circle btn-edit" disabled="disabled" >Edit</a>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                        {% endfor %}
+                {% else %}
+                    <br><hr>
+                    <td>No AB-Test Campaign(s)</td>
+                {% endif %}
+                </tbody>
+            </table>
+                <script>
+                    $(document).ready( function () {
+                        $('#paging2').DataTable({
+                            "ordering": false
+                        });
+                    } );
+                </script>
+            </div>
+
+
+            <div class="One_time">
+            {% if One_time %}
+                <table class="table " id="paging1">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in One_time %}
+                    <tr>
+                        <td width="75%"  data-td="{{item.campaign_type}}">
+                            {% if item.campaign_type == "AB_Test" %}
+
+                            <a href="/campaigns/dashboard/{{item.id}}/{{item.campaign_type}}/" class="campaign_title">{{item.name}}</a>
+                            <h5 class="sub">A/B Test</h5>
+                            {% elif item.campaign_type == "One-time" %}
+                            <a href="/campaigns/dashboard/{{item.id}}/{{item.campaign_type}}/" class="campaign_title">{{item.name}}</a>
+                            <h5 class="sub">One-time</h5>
+                            {% endif %}
+                        </td>
+
+                        <td width="25%"  data-td="{{item.campaign_type}}" style=" padding-top: 0px; padding-bottom: 0px; ">
+
+                            {% if item.status == "ACTIVE" and item.campaign_state == "PUBLISHED"%}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info active" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Active</h5>
+                                    </div>
+                                </div>
+                                    <a href="/campaigns/{{ item.campaign_type }}/{{ item.id }}/edit/"  class="btn btn-default btn-circle btn-edit">Edit</a>
+
+                            {% elif item.status == "ACTIVE" and item.campaign_state == "DRAFT" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info draft" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Draft</h5>
+                                    </div>
+                                </div>
+                                    <a href="/campaigns/{{ item.campaign_type }}/{{ item.id }}/edit/"  class="btn btn-default btn-circle btn-edit">Edit</a>
+
+                            {% elif item.status == "PROCESSING" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar-info processing" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100"><h5>Processing</h5>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}">Pause</a>
+
+                            {% elif item.status == "QUEUED" %}
+                                <div class="progress Sending progress_bar">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{item.average}}%; background-color: #1D8FFA;">
+                                         <h3 style="margin-left:6px;font-size:12px">Sending...{{item.average}}%</h3>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}" >Pause</a>
+
+                            {% elif item.status == "PAUSE" %}
+                                <div class="progress Sending progress_bar">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:{{item.average}}%; background-color: #1D8FFA;">
+                                         <h3 style="margin-left:6px;font-size:12px">Sending...{{item.average}}%</h3>
+                                    </div>
+                                </div>
+                                    <a class="btn btn-default btn-circle btn-edit pause" data-value="{{item.id}}" data-type="{{item.campaign_type}}" >Resume</a>
+
+                            {% elif item.status == "PROCESSED" %}
+                                <div class="progress progress_bar">
+                                    <div class="progress-bar progress-bar processed" role="progressbar" aria-valuenow="100"
+                                         aria-valuemin="0" aria-valuemax="100" style="width:100% "><h5>Completed</h5>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0);" class="btn btn-default btn-circle btn-edit" disabled="disabled" >Edit</a>
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                        {% endfor %}
+                {% else %}
+                    <br><hr>
+                    <td>No One-Time Campaign(s)</td>
+                {% endif %}
+                </tbody>
+            </table>
+            <script>
+                $(document).ready( function () {
+                    $('#paging1').DataTable({
+                        "ordering": false
+                    });
+                } );
+            </script>
+            </div>
+            <br>
+        </div>
+    </div>
+<!-- /.container -->
+{% endblock %}
+
+{% block script %}
+
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+
+    <script>
+        $('[data-toggle="tooltip"]').tooltip()
+
+        $(document).ready(function () {
+            $(".One_time").hide();
+            $(".AB_test").hide();
+            $(".campaigns").show();
+        });
+        $('select').on('change', function(){
+            var val = $(this).val();
+            if(val === "AB_Test"){
+                $(".AB_test").show();
+                $(".One_time").hide();
+                $(".campaigns").hide();
+            }
+            else if(val === "One-time"){
+                $(".AB_test").hide();
+                $(".One_time").show();
+                $(".campaigns").hide();
+            }
+            else{
+                $(".campaigns").show();
+                $(".One_time").hide();
+                $(".AB_test").hide();
+            }
+        });
+
+    </script>
+    <script>
+        $( ".pause" ).on("click", function() {
+            var campaignId = $(this).attr("data-value");
+            var campaign_type = $(this).attr("data-type");
+            var name = $(this).text();
+
+            if(name == "Pause"){
+                $(this).text("Resume");
+                $.post("/campaigns/pause/", {'params': campaign_type,'id':campaignId}, function(response){
+                    console.log(response);
+                    if(response === 'PROCESSED'){
+                        window.location.reload(true);
+                    }
+                });
+            } else {
+                $(this).text("Pause");
+                $.post("/campaigns/resume/", {'params': campaign_type,'id':campaignId}, function(response){
+                    console.log(response);
+                });
+            }
+
+        });
+
+    </script>
+
+{% endblock %}

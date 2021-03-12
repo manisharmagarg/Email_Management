@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block head %}
+<style>
+.left-btn{border:none;height: 32px;border-radius: 4px;width: 65%;margin-left: -21px;}
+.right-btn{border:none;height: 32px;border-radius: 4px;width: 65%;margin-right: -21px;;font-weight:bold;}
+
+
+.slider-selection {
+  background: #0d96f6;
+  background:linear-gradient(to right,#fff 1px,transparent 0) 0 0/ 100% 100% #0d96f6;
+  background-image: linear-gradient(to right, rgb(255, 255, 255) 1px, rgba(13, 150, 246) 0px);
+}
+
+</style>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sweetalert.min.css') }}">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <heading>What would you like to test?</heading><br><br>
+
+    <div class="col-sm-8 col-md-8 well" style="right:12px; float: left;padding-bottom: 0px !important;border-radius: 7px;">
+        <p>Choose the variable you want to test. We'll generate a campaign for each combination of <br>
+           variables. Each is allowed 3 variables.</p><br>
+
+        <form method="POST" role="form" id="ab_campaign_form">
+            <input type="hidden" name="campaign_count" value="" id="counter">
+            <input type="hidden" name="filter" value="" id="filter">
+            <input type="hidden" value="{{ab_campaign_count}}" id="count">
+
+            <div class="col-sm-3 col-md-3 well" style="padding-left: 0px;padding-right: 0px;
+                 height: 154px;float:left;background-color: #E8E8E8;">
+                <center>
+                    <i class="fa fa-2x" id="theCount" style=" margin-top: 26px;">
+                        <p style="margin-top: 0px;margin-bottom: 0px;cursor: pointer;">
+                            {% if filter == "subject_lines" %}
+                                {{ab_campaign_count}}
+                            {% else %}
+                                <img height="30" width="30" src="{{ url_for('static', filename='fonts/fa-plus-circle-o.svg') }}">
+                            {% endif %}
+                        </p >
+                    </i>
+                    <h1 style="font-size:14px;">Subject lines</h1>
+                </center>
+                 <input class="fa fa-2x left-btn" type="button" value="-" id="minSubject" style="display: none;">
+                 <input class="fa fa-2x right-btn" type="button" value="+" id="addSubject" style="display: none;">
+            </div>
+
+            <div class="col-sm-3 col-md-3 well" style="padding-left: 0px;padding-right:0px; height:154px; float:left;margin-left: 19px;background-color: #E8E8E8;">
+                <center>
+                    <i class="fa fa-2x" id="contentCount" style="margin-top: 26px;">
+                        <p style=" margin-top: 0px;margin-bottom: 0px;cursor: pointer;">
+                            {% if filter == "content_template" %}
+                                {{ab_campaign_count}}
+                            {% else %}
+                                <img height="30" width="30" src="{{ url_for('static', filename='fonts/fa-plus-circle-o.svg') }}">
+                            {% endif %}
+                        </p >
+                    </i>
+                    <h1 style="font-size:14px; ">Content Templates</h1>
+                </center>
+                <input class="fa fa-2x left-btn" type="button" value="-" id="minContent" style="display: none">
+                <input class="fa fa-2x right-btn" type="button" value="+" id="addContent" style="display: none">
+            </div>
+
+            <div class="col-sm-3 col-md-3 well" style="padding-left: 0px;padding-right: 0px; height:154px;float:left;margin-left: 19px;background-color: #E8E8E8;">
+                <center>
+                    <i class="fa fa-2x" id="sendCount" style=" margin-top: 26px;">
+                        <p style=" margin-top: 0px;margin-bottom: 0px;cursor: pointer;">
+                            {% if filter == "send_time" %}
+                                {{ab_campaign_count}}
+                            {% else %}
+                                <img height="30" width="30" src="{{ url_for('static', filename='fonts/fa-plus-circle-o.svg') }}">
+                            {% endif %}
+                        </p >
+                    </i>
+                    <h1 style="font-size:14px;">Send Time</h1>
+                </center>
+                    <input class="fa fa-2x left-btn" type="button" value="-" id="minSend" style="display: none;">
+                    <input class="fa fa-2x right-btn" type="button" value="+" id="addSend" style="display: none;">
+
+            </div><br><br><br><br><br><br><br><br>
+
+
+            <h5 style="font-size: 14px;margin-top: 22px;">What percentage of your recipients should receive your test combinations?</h5>
+            <h5 style="font-size:12px">0%<i style="float:right;">100%</i></h5>
+            {% if test_percentage %}
+                <div class="form-group ">
+                    <input id="slider_percentage" type="text" data-slider-min="0" role="progressbar" style="width=1000;"
+                           data-slider-max="100" data-slider-step="1" data-slider-value="{{test_percentage}}" required="required"/>
+                    <input type="hidden" name="percentage" id="percentage" value="{{test_percentage}}">
+                </div>
+            {% else %}
+                <div class="form-group ">
+                    <input id="slider_percentage" type="text" data-slider-min="0" role="progressbar" style="width=1000;"
+                           data-slider-max="100" data-slider-step="1" data-slider-value="50" required="required"/>
+                    <input type="hidden" name="percentage" id="percentage" value="50">
+                </div>
+            {% endif %}
+
+            <h5 style="font-size: 14px;">How should a winning combination be determined?</h5>
+            <div class="form-group">
+                <select name="rate" id="rate" class="form-control" style="width: 150px;float:left;">
+                    <option value="Click rate">By click rate</option>
+                    <option value="Open rate">By open rate</option>
+                </select>
+
+                <input type="text" name="time_after" id="time_after" value="{{time_after}}"
+                       style="width:50px;margin-left: -160px;border-radius: 5px;height: 35px; text-align:center;">
+                    <label style="float:left;font-size:12px;margin-left: 22px;margin-top: 5px;">after</label>
+
+                <select name="time_type" id="time_type" class="form-control" style="width:100px; float:left; margin-left:80px;">
+                    <option value="days">days</option>
+                    <option value="hours">hours</option>
+                </select>
+            </div>
+            {% if type == 'one-time' %}
+            <div class="form-group" style="text-align: center;margin-top:65px;">
+                <a href="/campaigns/one_time_campaign/setup/{{ ab_campaigns_parent_id }}/{{ campaign_type }}/" class="btn btn-back">
+                    <p style="margin-top:3px;">Back</p></a>
+                <button type="button" class="btn-save btn_campaign">Save & Continue</button>
+            </div>
+
+            {% else %}
+
+            <div class="form-group" style="text-align: center;margin-top:65px;">
+                <a href="/campaigns/one_time_campaign/create/{{ ab_campaigns_parent_id }}/{{ campaign_type }}/" class="btn btn-back">
+                    <p style="margin-top:3px;">Back</p></a>
+                <button type="button" class="btn-save btn_campaign">Save & Continue</button>
+            </div>
+
+            {% endif %}
+
+        </form>
+    </div>
+    {% if test_percentage %}
+    <div class="col-sm-4 col-md-4 well" style="background: #ffffff;padding-bottom: 0px !important;border-radius:7px;float:right;
+    margin-right:-11px;">
+        <h5 style="font-size: 15px;color:#666666;margin-bottom: 14px;margin-top: -4px;">Summary</h5>
+        <table class="table" style="margin-bottom: 0px;color:#666666;">
+            <tbody class="vertical_align">
+                <tr>
+                    <td width="70%">
+                        <r>Recipients per combination</r>
+                    </td>
+                    <td width="10%" style="color:#666666;">
+                        <r id="segment_count_value">{{segment_count}}</r>
+                        <r>Approx</r>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="70%">
+                        <r>Test segment</r>
+                    </td>
+                    <td width="10%" style="color:#666666;">
+                        <b id="test_segment">{{test_percentage}}</b>%
+                        <div style="font-size:14px; font-weight:bold; color:#666666;" id="test"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="70%">
+                        <r>Winning segment</r>
+                    </td>
+                    <td width="10%">
+                        <b id="winning_segment">{{test_percentage}}</b>%
+                        <div style="font-size:14px; font-weight:bold; color:#666666;" id="winning"></div>
+                    </td>
+                </tr>
+                <tr style="height: 55px;">
+                    <td width="70%">
+                        <r>Total recipients</r>
+                    </td>
+                    <td width="10%">
+                        <r style="font-size:12px;" id="total_segments">{{segment_count}}</r>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="col-sm-4 col-md-4 well" style="background: #ffffff padding-bottom: 0px !important;border-radius: 7px;float:right;
+    margin-right: -11px;">
+        <h5 style="font-size: 15px;color:#666666;margin-bottom: 14px;margin-top: -4px;">Summary</h5>
+        <table class="table" style="margin-bottom: -23px;color:#666666;">
+            <tbody class="vertical_align">
+                <tr>
+                    <td width="70%">
+                        <r>Recipients per combination</r>
+                    </td>
+                    <td width="10%" style="color:#666666;">
+                        <r id="segment_count_value">0</r>
+                        <r>Approx</r>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="70%">
+                        <r>Test segment</r>
+                    </td>
+                    <td width="10%" style="color:#666666;">
+                        <b id="test_segment">50</b>%
+                        <div style="font-size:14px; font-weight:bold; color:#666666;" id="test">None</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="70%">
+                        <r>Winning segment</r>
+                    </td>
+                    <td width="10%">
+                        <b id="winning_segment">50</b>%
+                        <div style="font-size:14px; font-weight:bold; color:#666666;" id="winning">None</div>
+                    </td>
+                </tr>
+                <tr style="height: 55px;">
+                    <td width="70%">
+                        <r>Total recipients</r>
+                    </td>
+                    <td width="10%">
+                        <r style="font-size:12px;">{{segment_count}}</r>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endif%}
+
+    <input type="hidden" id="segment_count" value="{{segment_count}}">
+
+</div>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/test.js') }}"></script>
+{% endblock %}

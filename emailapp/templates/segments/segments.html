@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Segment{% endblock %}
+{% block head %}
+<style>
+    .btn-edit
+    {float:right;border-radius: 50px;height: 20px;width: 50px;
+    margin-top: 2px; background:#f3f3f3;font-weight: bold;}
+
+    h5{font-size: 12px;}
+</style>
+<meta http-equiv="default-style" content="the document's preferred stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <heading>Segments</heading>
+    <a href="/segments/create/" class="btn btn-info radius"
+       style="margin-left:20px; background:#4f87f9; border-radius:6px; font-weight: bold;color:#fff;margin-bottom:10px;">Create segment</a><br><br>
+    <div class="col-sm-12 col-md-12 well" id="content" style="background:#ffffff;">
+        <form method="POST" role="form">
+            <select name=""  class="form-control" required="required" style="width: 228px;">
+                <option value="" disabled="disabled" selected hidden>Sort by date created</option>
+            </select>
+                <table class="table" id="paging2" width="100%">
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for list in list_data %}
+                        <tr>
+                            <td width="50%">
+                                <a href="javascript:void(0);" style="color;color: #428bca;font-weight:bold;">{{list.name}}</a>
+                                <h5>Created {{list.created_on}}</h5>
+                            </td>
+                            <td width="10%"><b>{{list.count}}</b>
+                                <h5>Recipients</h5>
+                            </td>
+                            <td width="10%"><b>{{list.open_len}}%</b>
+                                <h5>Opens</h5>
+                            </td>
+                            <td width="10%"><b>{{list.click_len}}%</b>
+                                <h5>Clicks</h5>
+                            </td>
+                            <td width="10%">
+                                <a href="javascript:void(0);" class="btn btn-default btn-circle btn-edit">Stats</a>
+                            </td>
+                            <td width="10%">
+                                <a href="/segments/{{list.id}}/edit/" class="btn btn-default btn-circle btn-edit">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+
+                </table>
+            </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+<script>
+    $(document).ready( function () {
+        $('#paging2').DataTable();
+    } );
+</script>
+{% endblock %}

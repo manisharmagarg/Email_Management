@@ -1,0 +1,33 @@
+/* campaigns.html work */
+.PROCESSED
+{
+    color:white;
+    background-color:#3ac73a;
+    padding:8px;
+}
+.ACTIVE
+{
+    color:white;
+    background-color:#1e7490;
+    padding:8px;
+}
+.PROCESSING
+{
+    color:white;
+    background-color:#b11b3e;
+    padding:8px;
+}
+.QUEUED
+{
+    color:white;
+    background-color:#5bc0de;
+    padding:8px;
+}
+
+.tool-tip {
+  display: inline-block;
+}
+
+.tool-tip [disabled] {
+  pointer-events: none;
+}

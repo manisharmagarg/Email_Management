@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Subject Line {% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+<div class="container">
+    <heading>Choose your subject line</heading>
+    <div class="col-sm-12 col-md-12 well" id="content" style="margin:18px auto 35px auto; height: 100vh;">
+    <form method="POST" role="form">
+                <div class="col-md-12 paddless" style="padding-left: 0px; margin-top:-7px; padding-right: 30px;">
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject</label>
+                            <input type="text" value="{{ emails_subject }}" name="email_subject" class="form-control"
+                                   required="required" placeholder="Example subject">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label font-label">Preview Text below subject</label>
+                            <input type="text" value="{{ preview_text }}" name="preview_text_subject" class="form-control"
+                                   required="required" placeholder="Example of preview text">
+
+                        </div>
+                        {% if emails_subject %}
+                            <div class="form-group" style="text-align: center;margin-top:145px;">
+                                <a href="/campaigns/One-time/{{ campaign_id }}/edit/" class="btn btn-back"><p style="margin-top:3px;">Back</p></a>
+                                <button type="submit" class="btn-save">Save & Continue</button>
+                            </div>
+
+                        {% elif type == 'Reoccuring' %}
+                            <div class="form-group" style="text-align: center;margin-top:145px;">
+                                <a href="/campaigns/one_time_campaign/create/{{ campaign_id }}/{{ campaign_type }}/" class="btn btn-back"><p style="margin-top:3px;">Back</p></a>
+                                <button type="submit" class="btn-save">Save & Continue</button>
+                            </div>
+                        {% else %}
+                            <div class="form-group" style="text-align: center;margin-top:145px;">
+                                <a href="/campaigns/one_time_campaign/setup/{{ campaign_id }}/{{ campaign_type }}/" class="btn btn-back"><p style="margin-top:3px;">Back</p></a>
+                                <button type="submit" class="btn-save">Save & Continue</button>
+                            </div>
+
+                        {% endif %}
+                </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block script %}
+{% endblock %}

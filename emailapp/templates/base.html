@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            {% block title %}{% endblock %} -EMAIL MANAGEMENT
+        </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/wcss.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fade.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-slider.css') }}">
+
+        <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap-slider.min.js') }}"></script>
+        {% block head %}{% endblock %}
+    </head>
+
+    <body>
+    <!---------------------------- NAVIGATION BAR BEGINS ---------------------------->
+		<nav class="navbar navbar-default" style="height: 77px;background-color: #ffffff; */">
+	  		<div class="container-fluid" >
+				<div class="navbar-header">
+                    <a class="navbar-brand brand-name" href="/campaigns/" >
+                        <img class="img-responsive2" style="margin-left: 12px;border-radius: 5px;height: 38px;"
+                             src="{{ url_for('static', filename='images/images.png') }}"></a>
+                    <!--<a class="navbar-brand" id="nav" href="/campaigns/dashboard/">Dashboard</a>-->
+                    <a class="navbar-brand" id="nav" href="/campaigns/">Campaigns</a>
+                    <a class="navbar-brand" id="nav" href="/segments/">Segments</a>
+
+                </div>
+
+                <div class="nav navbar-right top-nav">
+                    <a class="navbar-brand brand-name" href="/signout/"
+                       style="color:#666666; margin-top: 11px;margin-right: -17px;font-weight: bold;">{{session['firstname']}} {{session['lastname']}}</a>
+                    <a class="navbar-brand brand-name" href="javascript:void(0);" ></a>
+                    <img src="{{ url_for('static', filename='images/profile.png') }}"
+                         class="img-circle" style="margin-right: 27px;margin-top: 16px;" width="38" height="38" title="Circle Corners ">
+                </div>
+	  		</div>
+		</nav>
+
+      <!----------------------------- NAVIGATION BAR ENDS ----------------------------->
+                       {% block content %}{% endblock %}
+      <!----------------------------- FOOTER ----------------------------->
+
+
+    {% block script %}{% endblock %}
+    </body>
+</html>

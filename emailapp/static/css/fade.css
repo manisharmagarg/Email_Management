@@ -1,0 +1,50 @@
+/* warning code*/
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0%;
+  }
+}
+
+
+.fourth-text {
+  opacity: 0;
+  color:red;
+  animation-name: fadeInOut;
+  animation-delay: 0.0s;
+  animation-duration: 5s;
+}
+
+/* Sr. no. counter */
+body {
+    counter-reset: my-sec-counter;
+}
+
+h6:before {
+    counter-increment: my-sec-counter;
+    content: "" counter(my-sec-counter) ". ";
+}
+
+
+/* footer*/
+footer {position: fixed; bottom: 0; height: 40px; background-color: white;}
+
+    ::placeholder {
+    color: black ! important;
+}
+
+:-ms-input-placeholder { / Internet Explorer 10-11 /
+   color: black ! important;
+}
+
+::-ms-input-placeholder { / Microsoft Edge /
+   color: black ! important;
+}

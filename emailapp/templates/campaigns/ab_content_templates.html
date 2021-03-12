@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %} Content Templates {% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <heading>Choose content templates</heading>
+        <div class="col-sm-12 col-md-12 well" id="content" style="margin:18px auto 35px auto; height: 100vh;">
+            <p>Test different days or times to send your campaign. Times are in
+                <b>Pacific Standered Time.</b>
+            </p><br>
+            <form method="POST" role="form">
+                {% if test_variable == 'content_template' %}
+                    {% if ab_campaign_count == '3' %}
+
+                    <div class="form-group">
+                        <label class="control-label font-label" >Template 1</label>
+                        <select name="template_first"  class="form-control" required="required">
+                            <option value="{{ template_id1 }}" style="background:#e4e4e4;" hidden>{{ name1 }} {{ path1 }}</option>
+                            {% for template in template %}
+                            <option value="{{ template.id }}">
+                            {{ template.name }} | {{ template.path }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-label" >Template 2</label>
+                        <select name="template_second"  class="form-control" required="required">
+                            <option value="{{ template_id2 }}" style="background:#e4e4e4;" hidden>{{ name2 }} {{ path2 }}</option>
+                            {% for template in template %}
+                            <option value="{{ template.id }}">
+                            {{ template.name }} | {{ template.path }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-label" >Template 3</label>
+                        <select name="template_third"  class="form-control" required="required">
+                            <option value="{{ template_id3 }}" style="background:#e4e4e4;"hidden >{{ name3 }} {{ path3 }}</option>
+                            {% for template in template %}
+                            <option value="{{ template.id }}">
+                            {{ template.name }} | {{ template.path }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    {% elif ab_campaign_count == '2' %}
+                    <div class="form-group">
+                        <label class="control-label font-label" >Template 1</label>
+                        <select name="template_first"  class="form-control" required="required">
+                            <option value="{{ template_id1 }}" style="background:#e4e4e4;" hidden>{{ name1 }} {{ path1 }}</option>
+                            {% for template in template %}
+                            <option value="{{ template.id }}">
+                            {{ template.name }} | {{ template.path }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-label" >Template 2</label>
+                        <select name="template_second"  class="form-control" required="required">
+                            <option value="{{ template_id2 }}" style="background:#e4e4e4;" hidden>{{ name2 }} {{ path2 }}</option>
+                            {% for template in template %}
+                            <option value="{{ template.id }}">
+                            {{ template.name }} | {{ template.path }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    {% else %}
+                    {% endif %}
+                {% else %}
+                    <div class="form-group">
+                        <label class="control-label font-label" >Template 1</label>
+                        <select name="template_first"  class="form-control" required="required">
+                            <option value="{{ template_id1 }}" style="background:#e4e4e4;" hidden>{{ name1 }} {{ path1 }}</option>
+                            {% for template in template %}
+                            <option value="{{ template.id }}">
+                            {{ template.name }} | {{ template.path }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                {% endif %}
+
+                <div class="form-group" style="text-align: center;margin-top:145px;">
+                    <a href="/campaigns/" class="btn btn-back"><p style="margin-top:3px;">Cancel</p></a>
+                    <button type="submit" class="btn-save">Save & Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+{% endblock %}

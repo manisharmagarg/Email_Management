@@ -1,0 +1,116 @@
+body{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #111;
+    background-color: #f1f1f1;}
+
+.box {
+    margin-bottom: 20px;
+    background:#ffffff;
+    height: 155px;
+    width: 262px;
+    float:left;
+    border:2px solid;
+    border-radius: 5px;
+    border-color: #c5c0c0;
+    font-size:12px;
+}
+
+.centered {
+    margin: 0 auto;
+    text-align: left;
+    width: 328px;
+}
+.centered1 {
+    margin: 0 auto;
+    text-align: left;
+    width: 50%;}
+
+
+.pro{
+width:100%;
+border-radius: 50px;
+height: 12px;}
+
+
+.btn-back{
+    height:35px;
+    width:150px;
+    font-weight:bold;
+    background:#f3f3f3;
+    border-radius:6px;
+    font-size:12px;}
+
+.btn-save{
+    height:35px;
+    width:150px;
+    font-weight:bold;
+    background:#4f87f9;
+    margin-left:12px;
+    color:#fff;
+    border-radius:5px;
+    border-color:#4f87f9;
+    font-size:12px;}
+
+.container{
+    background-color: #f1f1f1;}
+
+.upper_btn{
+    border-radius: 50px;
+    height: 33px;
+    width: 126px;
+    float:right;
+    margin-top: 8px;
+    font-weight: bold;
+    background:#FFB220 !important;}
+
+heading{
+    font-size:34px;
+    font-weight:bold;}
+.create{
+    margin-left:20px;
+    background:#1D8FFA;
+    border-radius:8px;
+    font-weight: bold;
+    color:#fff ! important;
+    margin-bottom:10px;
+    margin-left: 31px;}
+
+.campaign_title{
+    color: #1D8FFA;
+    font-weight: bold;
+    font-size:16px;}
+
+.well{
+    background: #ffffff;
+    padding: 25px !important;}
+
+#nav{
+    color:#666666;
+    margin-top: 11px;
+    font-size:16px;
+    margin-left:2px}
+
+
+.font-label{
+    font-size:12px !important;
+    font-weight:normal !important;
+    color:#333333 !important;
+    margin-bottom:8px;}
+
+select + i.fa {
+  font-size: 12px;
+  color: #808FA3;
+  float: right;
+  margin-top: -23px;
+  margin-right: 5px;
+  pointer-events: none;
+  background-color: #fff;
+  padding-right: 5px;}
+
+.vertical_align>tr>td{
+    vertical-align: middle !important;
+    font-size: 13px;
+    height: 60px;}
+

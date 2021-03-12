@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    	<meta charset="UTF-8">
+    	<title>User Login</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fade.css') }}">
+		<script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default" style="background-color: #ffffff; */">
+	  		<div class="container-fluid">
+				<div class="navbar-header">
+		  			<a class="navbar-brand" href="javascript:void(0);">Email Management</a>
+				</div>
+	  		</div>
+		</nav>
+		<div class="col-md-12" style="margin-top: 40px;">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<form method="POST" role="form">
+							<div class="form-group">
+								<h2 class="text-center">Login</h2>
+								{% if msg %}
+								<p class="fourth-text text-center">{{ msg }}</p>
+								{% endif %}
+							</div>
+							<hr>
+							<div class="form-group">
+								<label class="control-label" for="signupEmail">Email</label>
+								<input id="signupEmail" type="email" maxlength="50" name="email" class="form-control" required="required" placeholder="Email">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="signupPassword">Password</label>
+								<input id="signupPassword" type="password" name="password" maxlength="25" class="form-control" required="required" placeholder="Password" length="40">
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-info btn-block">Login</button>
+							</div>
+							<hr>
+							<p class="form-group text-center">Don't have an account <a href="/register/">Register here</a>.</p>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+			</div>
+		</div>
+	</body>
+</html>

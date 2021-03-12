@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}One Time Campaign {% endblock %}
+{% block head %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-toggle.min.css') }}">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <heading>Setup one-time campaign</heading>
+    <div class="col-sm-12 col-md-12 well" id="content" style="margin:18px auto 35px auto; height: 100vh;">
+        <form method="POST" role="form" id="campaign_form">
+            <div class="col-md-12 paddless" style="padding-left: 0px; margin-top:-7px; padding-right: 30px;">
+                <div class="form-group">
+                    <label class="control-label font-label" >Campaign name</label>
+                    <input type="text" id="campaign_name" name="campaign_name" value="{{name}}" class="form-control" required="required" placeholder="December Site Updates">
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label font-label " >Segment</label>
+                    <select name="list_id" id="list_id" class="form-control" required="required">
+                        <option value="{{list_id}}" readonly="readonly" selected hidden>{{list_name}}</option>
+                        {% for item in list_data %}
+                        <option value="{{ item.id }}">
+                        {{ item.name|title }} ({{ item.count }})
+                        </option>
+                        {%endfor%}
+                    </select>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+
+                {% if campaign_type == 'AB_Test' %}
+                <div class="form-group">
+                    <label class="control-label font-label">A/B Testing</label><br>
+
+                    <span class="tool-tip" data-toggle="tooltip" data-placement="top">
+                        <label class="switch">
+                            <input class="toggle-class" id="toggle_id" value="1" type="checkbox" name="toggle_data"  checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+                </div>
+
+                {% elif campaign_type == 'One-time' %}
+                <div class="form-group">
+                    <label class="control-label font-label">A/B Testing</label><br>
+
+                    <span class="tool-tip" data-toggle="tooltip" data-placement="top">
+                        <label class="switch">
+                            <input class="toggle-class" id="toggle_id" value="0" type="checkbox" name="toggle_data" >
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+                </div>
+                {% else %}
+                <div class="form-group">
+                    <label class="control-label font-label">A/B Testing</label><br>
+
+                    <span class="tool-tip" data-toggle="tooltip" data-placement="top">
+                        <label class="switch">
+                            <input class="toggle-class" id="toggle_id" value="0" type="checkbox" name="toggle_data" >
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+                </div>
+                {% endif %}
+
+                <div class="form-group" style="text-align: center;margin-top:45px;">
+                    <a href="/campaigns/create/" class="btn btn-back"><p style="margin-top:3px;">Back</p></a>
+                    <button type="submit" id="submit_btn" class="btn-save">Save & Continue</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/bootstrap-toggle.min.js') }}"></script>
+
+<script>
+    $('.toggle-class').on('change', function(){
+        var toggle_status= $(this).is(':checked');
+        if(toggle_status == true){
+            var toggle_value = true;
+            $("#toggle_id").val(toggle_value);
+        }
+        else{
+            var toggle_value = "None";
+            $("#toggle_id").val(toggle_value);
+        }
+    });
+</script>
+{% endblock %}

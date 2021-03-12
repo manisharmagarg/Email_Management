@@ -1,0 +1,47 @@
+.active{
+    width:100%;
+    background-color: #0bbef9;
+}
+
+.draft{
+    width:100%;
+    background-color: #FFB220;
+}
+
+.processing{
+    width:100%;
+    background-color: #b11b3e;
+}
+
+.progress_bar{
+    margin-left: 40px;
+    width: 130px;
+    margin-top: 20px;
+    border-radius: 50px;
+    height: 34px;
+    background-color:#82bfea;
+}
+
+
+.btn-edit{
+    float:right;
+    border-radius: 50px;
+    line-height: 22px;
+    width: 50px;
+    margin-top: -54px;
+    background:#EEEEEE !important;
+    font-weight: bold;
+    font-size:12px;
+    border:none;
+}
+
+.processed{
+    background:#75D034;
+}
+
+h5{
+    font-size:12px;
+    }
+
+.sub{color:#666666;}
+

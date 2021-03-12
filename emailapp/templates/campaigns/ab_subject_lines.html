@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Subject Lines {% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+
+<div class="container">
+    <heading>Choose your subject lines </heading>
+    <div class="col-sm-12 col-md-12 well" id="content" style="margin:18px auto 35px auto; height: 100vh;">
+        <form method="POST" role="form">
+                <div class="col-md-12 paddless" style="padding-left: 0px; margin-top:-7px; padding-right: 30px;">
+                    {% if test_variable == 'subject_lines' %}
+                    {% if ab_campaign_count == '3' %}
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject 1</label>
+                            <input type="text" value="{{ emails_subject[0] }}" name="email_first_subject" class="form-control"
+                                   required="required" placeholder="Email subject 1">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject 2</label>
+                            <input type="text" value="{{ emails_subject[1] }}" name="email_second_subject" class="form-control"
+                                   required="required" placeholder="Email subject 2">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject 3</label>
+                            <input type="text" value="{{ emails_subject[2] }}" name="email_third_subject" class="form-control" required="required" placeholder="Email subject 3">
+                        </div>
+
+                    {% elif ab_campaign_count == '2' %}
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject 1</label>
+                            <input type="text" value="{{ emails_subject[0] }}" name="email_first_subject" class="form-control" required="required" placeholder="Email subject 1">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject 2</label>
+                            <input type="text" value="{{ emails_subject[1] }}" name="email_second_subject" class="form-control" required="required" placeholder="Email subject 2">
+                        </div>
+                    {% else %}
+                    {% endif %}
+                    {% else %}
+                        <div class="form-group">
+                            <label class="control-label font-label" >Email subject 1</label>
+                            <input type="text" value="{{ emails_subject[0] }}" name="email_first_subject" class="form-control"
+                                   required="required" placeholder="Email subject 1">
+                        </div>
+                    {% endif %}
+                        <div class="form-group">
+                            <label class="control-label font-label">Preview Text below subject</label>
+                            <input type="text" value="{{ preview_text }}" name="preview_text_subject" class="form-control" required="required" placeholder="Example of preview text">
+                        </div>
+
+                    {% if emails_subject %}
+                        <div class="form-group" style="text-align: center;margin-top:145px;">
+                            <a href="/campaigns/AB_Test/{{ campaign_id }}/edit/" class="btn btn-back"><p style="margin-top:3px;">Back</p></a>
+                            <button type="submit" class="btn-save">Save & Continue</button>
+                        </div>
+
+                    {% else %}
+                        <div class="form-group" style="text-align: center;margin-top:145px;">
+                            <a href="/campaigns/ab_test/{{ campaign_id }}/" class="btn btn-back"><p style="margin-top:3px;">Back</p></a>
+                            <button type="submit" class="btn-save">Save & Continue</button>
+                        </div>
+                    {% endif %}
+                </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+{% endblock %}

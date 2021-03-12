@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Segments {% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+    <div class="container">
+        <heading>Create a campaign</heading><br><br>
+        <div class="col-sm-12 col-md-12 well" id="content" style="margin-bottom: 35px;height: 100vh;">
+
+            <div class="centered1 test" style="display:flex;text-align: center;margin: 44px auto;">
+                <div class="box one-time" style="display:table;">
+                    <div style="display: table-cell; vertical-align:middle;">
+                        <b style="font-size:16px;">One-Time</b>
+
+                        <br>Create a campaign for sending out<br>
+                            newsletters, sites updates, or new<br>
+                            feature announcements.
+                    </div>
+                </div>
+                <div class="box Reoccuring" style="margin-left:30px;display:table;">
+                    <div style="display: table-cell; vertical-align:middle;">
+                         <b style="font-size:16px;">Reoccuring</b>
+
+                        <br>create a campaign for sending out<br>
+                            weekly inspiration emails,<br>
+                            retargeting emails, etc.
+                    </div>
+                </div>
+            </div>
+
+            <center>
+                <div class="col-sm-12 col-md-12" style="text-align: center;">
+                        <a href="/campaigns/" class="btn btn-back"><p  style="margin-top:3px;">Back</p></a>
+                        <button type="button" id="btnSubmit" class="btn-save">Save & Continue</button>
+                    </div>
+            </center>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(function () {
+            $('div.one-time').click(function(){
+                $('div.Reoccuring').css('border', "#c5c0c0 solid 2px");
+
+                $(this).css('border', "#4f87f9 solid 3px ");
+
+                $("#btnSubmit").button().click(function(){
+                    window.location = '/campaigns/one_time_campaign/setup/';
+                });
+            });
+
+            $('div.Reoccuring').click(function(){
+                $('div.one-time').css('border', "#c5c0c0 solid 2px");
+                $(this).css('border', "#4f87f9 solid 3px ");
+
+                $("#btnSubmit").button().click(function(){
+                    window.location = '/campaigns/one_time_campaign/create/';
+
+                });
+            });
+        });
+    </script>
+{% endblock %}
